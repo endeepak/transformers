@@ -2,10 +2,12 @@ PATH
   remote: .
   specs:
     transformers (0.0.1)
+      activesupport (~> 3.0.0)
 
 GEM
   remote: http://rubygems.org/
   specs:
+    activesupport (3.0.5)
     diff-lcs (1.1.2)
     rspec (2.5.0)
       rspec-core (~> 2.5.0)
@@ -20,5 +22,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activesupport (~> 3.0.0)
   rspec (~> 2.5.0)
   transformers!

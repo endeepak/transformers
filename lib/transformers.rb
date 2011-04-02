@@ -1,14 +1,17 @@
+require 'active_support/core_ext/array/extract_options'
+
 module Transformers
   module Hash
     def transform(&block)
       self.instance_eval(&block)
     end
 
-    def convert(key, options = {})
-      new_key = options[:as] || key
+    def convert(*keys)
+      options = keys.extract_options!
+      new_key = options[:as] || keys.first
       converter = options[:to]
-      value = self.delete(key)
-      new_value = converter ? converter.call(value) : value
+      values = keys.collect { |key| delete(key) }
+      new_value = converter ? converter.call(*values) : (values.length == 1 ? values.first : values)
       self[new_key] = new_value
     end
   end
