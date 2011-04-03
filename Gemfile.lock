@@ -9,6 +9,7 @@ GEM
   specs:
     activesupport (3.0.5)
     diff-lcs (1.1.2)
+    mocha (0.9.12)
     rspec (2.5.0)
       rspec-core (~> 2.5.0)
       rspec-expectations (~> 2.5.0)
@@ -23,5 +24,6 @@ PLATFORMS
 
 DEPENDENCIES
   activesupport (~> 3.0.0)
+  mocha (~> 0.9.10)
   rspec (~> 2.5.0)
   transformers!

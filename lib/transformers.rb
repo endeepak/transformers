@@ -1,22 +1,15 @@
-require 'active_support/core_ext/array/extract_options'
 require 'transformers/boolean'
 require 'transformers/method_call'
+require 'transformers/extensions/hash'
 
 module Transformers
-  module Hash
-    def transform(&block)
-      self.instance_eval(&block)
-    end
+  ALL = { :boolean => Transformers::Boolean }
 
-    def convert(*keys)
-      options = keys.extract_options!
-      new_key = options[:as] || keys.first
-      converter = options[:to]
-      values = keys.collect { |key| delete(key) }
-      new_value = converter ? converter.call(*values) : (values.length == 1 ? values.first : values)
-      self[new_key] = new_value
+  def self.get(converter)
+    case converter
+      when Module, Proc: converter
+      else ALL.has_key?(converter) ? ALL[converter] : MethodCall.new(converter)
     end
   end
 end
 
-Hash.send(:include, Transformers::Hash)
