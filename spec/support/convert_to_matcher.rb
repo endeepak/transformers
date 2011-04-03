@@ -4,11 +4,12 @@ RSpec::Matchers.define :convert do |value|
   end
 
   match do
-    described_class.call(value) == @expected_value
+    @converted_value = subject.call(value)
+    @converted_value == @expected_value
   end
 
   failure_message_for_should do |model|
-    "expected #{described_class} to convert #{value.inspect} to #{@expected_value.inspect}"
+    "expected #{subject} to convert #{value.inspect} to #{@expected_value.inspect} but was #{@converted_value.inspect}"
   end
 
   description do
