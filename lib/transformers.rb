@@ -1,15 +1,28 @@
 require 'transformers/boolean'
 require 'transformers/method_call'
+require 'transformers/unknown_transformer'
 require 'transformers/extensions/hash'
 
 module Transformers
-  ALL = { :boolean => Transformers::Boolean }
+  STANDARD = { :boolean => Transformers::Boolean }.freeze
 
-  def self.get(converter)
-    case converter
-      when Module, Proc: converter
-      else ALL.has_key?(converter) ? ALL[converter] : MethodCall.new(converter)
+  def self.custom
+    @custom ||= {}
+  end
+
+  def self.all
+    custom.merge(STANDARD)
+  end
+
+  def self.get(transformer)
+    case transformer
+      when Module, Proc: transformer
+      when Symbol: all.has_key?(transformer) ? all[transformer] : MethodCall.new(transformer)
+      else raise UnknownTransformer.new(transformer)
     end
   end
-end
 
+  def self.register(name, transformer)
+    custom[name] = transformer
+  end
+end
