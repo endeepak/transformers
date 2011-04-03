@@ -1,4 +1,5 @@
 require 'active_support/core_ext/array/extract_options'
+require 'transformers/boolean'
 
 module Transformers
   module Hash

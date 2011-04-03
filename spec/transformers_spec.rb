@@ -40,6 +40,19 @@ describe Transformers do
     end
 
     describe "to" do
+      it "should accept a object/lambda/module/class which responds to call method" do
+        module UpCase
+          def self.call(value)
+            return value.upcase
+          end
+        end
+        hash = {:eric => 'cartman'}
+
+        hash.transform { convert :eric, :to => UpCase }
+
+        hash[:eric].should == 'CARTMAN'
+      end
+
       context "for single key" do
         it "should apply conversion logic as per converter" do
           hash = {:eric => 'cartman'}
