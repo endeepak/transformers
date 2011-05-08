@@ -19,8 +19,8 @@ describe Hash do
 
           hash.transform { convert :stan, :as => :eric }
 
-          hash.has_key?(:stan).should_not be_true
-          hash.has_key?(:eric).should be_true
+          hash.should_not have_key(:stan)
+          hash.should have_key(:eric)
           hash[:eric].should == 'marsh'
         end
       end
@@ -31,9 +31,9 @@ describe Hash do
 
           hash.transform { convert :begin, :end, :as => :range }
 
-          hash.has_key?(:begin).should_not be_true
-          hash.has_key?(:end).should_not be_true
-          hash.has_key?(:range).should be_true
+          hash.should_not have_key(:begin)
+          hash.should_not have_key(:end)
+          hash.should have_key(:range)
           hash[:range].should == [12, 22]
         end
       end
@@ -76,6 +76,24 @@ describe Hash do
           hash[:name].should == 'eric cartman'
         end
       end
+    end
+  end
+
+  describe "rename" do
+    it "should rename the key" do
+      hash = {:stan => 'marsh'}
+
+      hash.rename :stan, :to => :eric
+
+      hash.should_not have_key(:stan)
+      hash.should have_key(:eric)
+      hash[:eric].should == 'marsh'
+    end
+
+    it "should raise error if :to option is missing" do
+      hash = {:stan => 'marsh'}
+
+      expect { hash.rename :stan }.should raise_error(/Missing options : :to/)
     end
   end
 end

@@ -15,6 +15,12 @@ module Transformers
         new_value = converter ? Transformers.get(converter).call(*values) : (values.length == 1 ? values.first : values)
         self[new_key] = new_value
       end
+
+      def rename(key, options = {})
+        new_key = options[:to]
+        raise MissingOption.new(:to) if new_key.nil?
+        self[new_key] = self.delete(key)
+      end
     end
   end
 end

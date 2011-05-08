@@ -1,5 +1,6 @@
 require 'transformers/boolean'
 require 'transformers/method_call'
+require 'transformers/missing_option'
 require 'transformers/unknown_transformer'
 require 'transformers/extensions/hash'
 
