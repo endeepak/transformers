@@ -1,0 +1,1 @@
+require 'transformers/extensions/action_controller'

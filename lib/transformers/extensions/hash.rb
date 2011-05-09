@@ -1,10 +1,12 @@
-require 'active_support/core_ext/array/extract_options'
-
 module Transformers
   module Extensions
     module Hash
-      def transform(&block)
-        self.instance_eval(&block)
+      def transform(key = nil, &block)
+        target = key.nil? ? self : self[key]
+        if target
+          raise TypeError.new("Can't apply transformations on #{target.inspect}. Expected a Hash") unless target.is_a?(Hash)
+          target.instance_eval(&block)
+        end
       end
 
       def convert(*keys)

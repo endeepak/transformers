@@ -2,12 +2,48 @@ require 'spec_helper'
 
 describe Hash do
   describe "#transform" do
-    it "should execute the transformations in the context of hash" do
-      hash = {:key => 'value'}
+    context "without any arguments" do
+      it "should execute the transformations in the context of hash" do
+        hash = {:key => 'value'}
 
-      hash.transform { delete :key }
+        hash.transform { delete :key }
 
-      hash.has_key?(:key).should_not be_true
+        hash.should_not have_key(:key)
+      end
+    end
+
+    context "with key as argument" do
+      context "when value is not a hash" do
+        it "should execute the transformations in the context of value" do
+          hash = {:key => { :nested_key => 'value'} }
+
+          hash.transform(:key) { delete :nested_key }
+
+          hash[:key].should_not have_key(:nested_key)
+        end
+      end
+
+      context "when value in nil" do
+        it "should not execute any transformations" do
+          hash = {:key => nil }
+
+          hash.transform(:key) { delete :nested_key }
+
+          hash[:key].should be_nil
+        end
+      end
+
+      context "when value is not a hash" do
+        it "should raise error" do
+          hash = {:key => 'value' }
+
+          expect {
+            hash.transform(:key) do
+              convert :foo, :as => :bar
+            end
+          }.should raise_error(/Can't apply transformations on "value". Expected a Hash/)
+        end
+      end
     end
   end
 

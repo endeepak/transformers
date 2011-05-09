@@ -1,3 +1,2 @@
-* :type support
-* Register custom :type
-* Boolean type converter
+* Document convert to matcher
+* Unit test rails extension (Don't how to test controller outside a rails project yet)
