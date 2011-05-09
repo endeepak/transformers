@@ -1,7 +1,7 @@
-Description
-===========
+Transformers [![Build Status](http://travis-ci.org/endeepak/transformers.png)](http://travis-ci.org/endeepak/transformers)
+============
 
-An extension to hash to allow various transformations using simple DSL
+Transformers is an extension to hash to allow various transformations using simple DSL. It also has optional rails extension which can used to dry up frequently used transformations applied on action params.
 
 Install
 =======
