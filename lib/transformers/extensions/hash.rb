@@ -23,6 +23,12 @@ module Transformers
         raise MissingOption.new(:to) if new_key.nil?
         self[new_key] = self.delete(key)
       end
+
+      def copy(key, options = {})
+        new_key = options[:to]
+        raise MissingOption.new(:to) if new_key.nil?
+        self[new_key] = self[key]
+      end
     end
   end
 end

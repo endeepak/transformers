@@ -132,5 +132,23 @@ describe Hash do
       expect { hash.rename :stan }.should raise_error(/Missing options : :to/)
     end
   end
+
+  describe "copy" do
+    it "should copy the value to another key" do
+      hash = {:stan => 'southpark'}
+
+      hash.copy :stan, :to => :eric
+
+      hash.should have_key(:eric)
+      hash.should have_key(:stan)
+      hash[:eric].should == hash[:stan]
+    end
+
+    it "should raise error if :to option is missing" do
+      hash = {:stan => 'marsh'}
+
+      expect { hash.copy :stan }.should raise_error(/Missing options : :to/)
+    end
+  end
 end
 
