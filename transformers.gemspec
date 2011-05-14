@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.email       = ["endeep123@gmail.com"]
   s.homepage    = "https://github.com/endeepak/transformers"
   s.summary     = %q{DSL to transform a hash}
-  s.description = %q{An extension to hash to allow various transformations using simple DSL}
+  s.description = %q{An extension to hash to allow various transformations using simple DSL. Also has optional rails extension to dry up frequently applied transformations on controller params.}
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
