@@ -1,7 +1,7 @@
 Transformers [![Build Status](http://travis-ci.org/endeepak/transformers.png)](http://travis-ci.org/endeepak/transformers)
 ============
 
-Transformers is an extension to hash to allow various transformations using simple DSL. It also has optional rails extension which can used to dry up frequently used transformations applied on action params.
+Transformers is an extension to hash to allow various transformations using simple DSL. It also has optional rails extension to dry up frequently applied transformations on controller params.
 
 Install
 =======
@@ -56,9 +56,7 @@ Available Transformations
 
         hash.convert :foo, :to => :boolean         #built-in
 
-* Using Custom converters
-
-  Define a module, object or lambda which responds to call method and returns converted value.
+* Using Custom converters : You can pass a lambda or define a module or an object which has a call method. This method will receive values for given keys and should return the converted value.
 
         module Transformers::Name
           def self.call(first_name, last_name)
@@ -83,6 +81,33 @@ Available Transformations
         end
 
 
+Rails Extensions
+================
+
+To Include rails extensions add the below line in a config/initializer/transformers.rb. You can register the custom transformers in the same file.
+
+        require 'transformers/rails'
+
+This adds _transform\_params_ extension to action controller. You can define the transformations for any action as,
+
+        transform_params :search, :only => :index do
+          convert :first_name, :last_name, :as => :name, :to => :name
+        end
+
+This will add a before\_filter in the controller to apply transformations on params[:search]. If the first argument is omitted, the transformations will be applied directly on the params. The options for transform\_params are same as before\_filter options.
+
+Rspec Matcher
+=============
+This gem has a rspec matcher for testing the custom converters. To use this, add the below line in the _spec\_helper_
+
+        require 'rspec/transformers'
+
+The converter spec can be written as
+
+        describe Transformers::Boolean do
+          it { should convert('true').to(true)}
+          it { should convert('false').to(false)}
+        end
 
 
 
