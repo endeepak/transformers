@@ -11,6 +11,7 @@ module Transformers
 
       def convert(*keys)
         options = keys.extract_options!
+        return unless keys.any? { |key| self.has_key?(key) }
         new_key = options[:as] || keys.first
         converter = options[:to]
         values = keys.collect { |key| delete(key) }

@@ -53,7 +53,7 @@ describe Hash do
         it "should rename the key" do
           hash = {:stan => 'marsh'}
 
-          hash.transform { convert :stan, :as => :eric }
+          hash.convert :stan, :as => :eric
 
           hash.should_not have_key(:stan)
           hash.should have_key(:eric)
@@ -65,7 +65,7 @@ describe Hash do
         it "should combine the keys to single key" do
           hash = {:begin => 12, :end => 22}
 
-          hash.transform { convert :begin, :end, :as => :range }
+          hash.convert :begin, :end, :as => :range
 
           hash.should_not have_key(:begin)
           hash.should_not have_key(:end)
@@ -82,34 +82,73 @@ describe Hash do
         Transformers.expects(:get).with(:converter).returns(converter)
         converter.expects(:call).with(:value).returns(:converted_value)
 
-        hash.transform do
-          convert :key, :to => :converter
-        end
+        hash.convert :key, :to => :converter
 
         hash[:key].should == :converted_value
       end
 
       context "for single key" do
-        it "should replace value with converted value" do
-          hash = {:eric => 'cartman'}
+        context "when key exists" do
+          it "should replace value with converted value" do
+            hash = {:eric => 'cartman'}
 
-          hash.transform do
-            convert :eric, :to => lambda { |value| value.upcase }
+            hash.convert :eric, :to => lambda { |value| value.upcase }
+
+            hash[:eric].should == 'CARTMAN'
           end
+        end
 
-          hash[:eric].should == 'CARTMAN'
+        context "when key does not exist" do
+          it "should not apply conversion" do
+            hash = {:eric => 'cartman'}
+
+            hash.convert :stan, :to => :kyle
+
+            hash[:eric].should == 'cartman'
+            hash.should_not have_key(:stan)
+          end
+        end
+      end
+
+      context "when hash has indifferent access" do
+        it "should apply conversion" do
+          hash = {'eric' => 'cartman'}.with_indifferent_access
+
+          hash.convert :eric, :to => :upcase
+
+          hash['eric'].should == 'CARTMAN'
         end
       end
 
       context "for multiple keys" do
-        it "should pass multiple values to converter and set converted vlaue for key given in :as option" do
-          hash = {:first_name => 'eric', :last_name => 'cartman' }
+        context "when all keys exists" do
+          it "should pass multiple values to converter and set converted vlaue for key given in :as option" do
+            hash = {:first_name => 'eric', :last_name => 'cartman' }
 
-          hash.transform do
-            convert :first_name, :last_name, :as => :name, :to => lambda { |first_name, last_name| first_name + ' '+ last_name }
+            hash.convert :first_name, :last_name, :as => :name, :to => lambda { |first_name, last_name| "#{first_name} #{last_name}" }
+
+            hash[:name].should == 'eric cartman'
           end
+        end
 
-          hash[:name].should == 'eric cartman'
+        context "when one of keys exists" do
+          it "should pass multiple values to converter and set converted vlaue for key given in :as option" do
+            hash = {:first_name => 'eric' }
+
+            hash.convert :first_name, :last_name, :as => :name, :to => lambda { |first_name, last_name| "#{first_name} #{last_name}" }
+
+            hash[:name].should == 'eric '
+          end
+        end
+
+        context "when none of keys exists" do
+          it "should not apply conversion" do
+            hash = {}
+
+            hash.convert :first_name, :last_name, :as => :name, :to => lambda { |first_name, last_name| "#{first_name} #{last_name}" }
+
+            hash.should_not have_key(:name)
+          end
         end
       end
     end

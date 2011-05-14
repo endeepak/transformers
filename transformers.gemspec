@@ -19,5 +19,6 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency("activesupport", "~> 3.0.0")
   s.add_development_dependency("rails", "~> 3.0.0")
   s.add_development_dependency("rspec", "~> 2.5.0")
+  s.add_development_dependency("rspec-rails", "~> 2.5.0")
   s.add_development_dependency("mocha", "~> 0.9.10")
 end
