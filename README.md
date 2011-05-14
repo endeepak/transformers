@@ -6,16 +6,11 @@ Transformers is an extension to hash to allow various transformations using simp
 Install
 =======
 
-[not yet released]
-
-Usage
-=====
-
         gem install transformers
 
-OR Add dependency in gem file for projects using bundler
+OR Add dependency in _Gemfile_ for projects using bundler
 
-        gem transformers
+        gem 'transformers'
 
 Available Transformations
 =========================
