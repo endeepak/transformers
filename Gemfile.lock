@@ -89,7 +89,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activesupport (~> 3.0.0)
   mocha (~> 0.9.10)
   rails (~> 3.0.0)
   rspec (~> 2.5.0)

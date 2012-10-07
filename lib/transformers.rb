@@ -19,9 +19,12 @@ module Transformers
 
   def self.get(transformer)
     case transformer
-      when Module, Proc: transformer
-      when Symbol: all.has_key?(transformer) ? all[transformer] : MethodCall.new(transformer)
-      else raise UnknownTransformer.new(transformer)
+      when Module, Proc
+        transformer
+      when Symbol
+         all.has_key?(transformer) ? all[transformer] : MethodCall.new(transformer)
+      else 
+        raise UnknownTransformer.new(transformer)
     end
   end
 
