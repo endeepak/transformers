@@ -2,6 +2,7 @@ require 'spec_helper'
 
 #TODO: Find why adding transform_params in individual spec definition fails and fix it.
 class TestActionController < ActionController::Base
+  include Rails.application.routes.url_helpers
   transform_params { convert :foo, :to => :upcase }
 
   transform_params :bar do

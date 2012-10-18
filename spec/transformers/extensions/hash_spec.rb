@@ -41,7 +41,7 @@ describe Hash do
             hash.transform(:key) do
               convert :foo, :as => :bar
             end
-          }.should raise_error(/Can't apply transformations on "value". Expected a Hash/)
+          }.to raise_error(/Can't apply transformations on "value". Expected a Hash/)
         end
       end
     end
@@ -168,7 +168,7 @@ describe Hash do
     it "should raise error if :to option is missing" do
       hash = {:stan => 'marsh'}
 
-      expect { hash.rename :stan }.should raise_error(/Missing options : :to/)
+      expect { hash.rename :stan }.to raise_error(/Missing options : :to/)
     end
   end
 
@@ -186,7 +186,7 @@ describe Hash do
     it "should raise error if :to option is missing" do
       hash = {:stan => 'marsh'}
 
-      expect { hash.copy :stan }.should raise_error(/Missing options : :to/)
+      expect { hash.copy :stan }.to raise_error(/Missing options : :to/)
     end
   end
 end

@@ -8,5 +8,3 @@ require 'rspec/rails'
 Transformers::Application.routes.draw do
   match ':controller(/:action(/:id(.:format)))'
 end
-
-include Rails.application.routes.url_helpers

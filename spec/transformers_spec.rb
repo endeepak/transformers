@@ -41,7 +41,7 @@ describe Transformers do
 
     context "when key is anything else" do
       it "should raise error" do
-        expect { Transformers.get("UNKNOWN") }.should raise_error('The "UNKNOWN" transformer is not supported')
+        expect { Transformers.get("UNKNOWN") }.to raise_error('The "UNKNOWN" transformer is not supported')
       end
     end
   end
