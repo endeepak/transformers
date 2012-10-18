@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     transformers (0.0.1)
-      activesupport (~> 3.0.0)
+      activesupport (~> 3.0)
 
 GEM
   remote: http://rubygems.org/
@@ -90,7 +90,7 @@ PLATFORMS
 
 DEPENDENCIES
   mocha (~> 0.9.10)
-  rails (~> 3.0.0)
+  rails (~> 3.0)
   rspec (~> 2.5.0)
   rspec-rails (~> 2.5.0)
   transformers!
